@@ -1,0 +1,30 @@
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    restart: unless-stopped
+    environment:
+      TZ: ${TZ}
+    volumes:
+      - ../php:/var/www/html:ro
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    # ports:
+    #   - 80:80
+    networks:
+      - wbx_net
+
+  php:
+    image: php:${PHP_VERSION}-fpm
+    container_name: php-fpm
+    restart: unless-stopped
+    environment:
+      TZ: ${TZ}
+    volumes:
+      - ../php:/var/www/html:ro
+    networks:
+      - wbx_net
+
+networks:
+  wbx_net:
+    name: wbx_net
+    external: true

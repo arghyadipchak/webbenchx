@@ -1,0 +1,10 @@
+name: cs681
+
+include:
+  - docker-compose/apache.docker-compose.yml
+  - docker-compose/nginx/docker-compose.yml
+  - docker-compose/httperf.docker-compose.yml
+  - docker-compose/oha.docker-compose.yml
+  - docker-compose/tsung.docker-compose.yml
+  - docker-compose/vegeta.docker-compose.yml
+  - docker-compose/k6.docker-compose.yml

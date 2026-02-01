@@ -1,0 +1,19 @@
+services:
+  apache:
+    image: ${IMAGE_PREFIX}/apache:latest
+    container_name: apache
+    restart: unless-stopped
+    environment:
+      TZ: ${TZ}
+    volumes:
+      - ./php:/var/www/html:ro
+    # ports:
+    #   - 80:80
+    networks:
+      - wbx_net
+    cpuset: '7'
+
+networks:
+  wbx_net:
+    name: wbx_net
+    external: true

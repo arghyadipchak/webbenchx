@@ -1,0 +1,21 @@
+services:
+  k6:
+    image: grafana/k6:latest
+    container_name: k6
+    restart: unless-stopped
+    user: ${USER_ID:-1000}:${GROUP_ID:-1000}
+    environment:
+      TZ: ${TZ}
+    volumes:
+      - ../results/k6:/results
+      - ../scripts/k6-test.js:/scripts/k6-test.js
+    networks:
+      - wbx_net
+    profiles:
+      - loadgen
+    cpuset: '8-11'
+
+networks:
+  wbx_net:
+    name: wbx_net
+    external: true

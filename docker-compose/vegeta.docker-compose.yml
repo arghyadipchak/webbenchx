@@ -1,0 +1,19 @@
+services:
+  vegeta:
+    image: jauderho/vegeta:latest
+    container_name: vegeta
+    restart: unless-stopped
+    environment:
+      TZ: ${TZ}
+    volumes:
+      - ./targets.txt:/targets.txt
+    networks:
+      - wbx_net
+    profiles:
+      - loadgen
+    cpuset: '8-11'
+
+networks:
+  wbx_net:
+    name: wbx_net
+    external: true

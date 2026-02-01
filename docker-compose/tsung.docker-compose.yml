@@ -1,0 +1,17 @@
+services:
+  tsung:
+    image: ${IMAGE_PREFIX}/tsung:latest
+    container_name: tsung
+    restart: unless-stopped
+    environment:
+      TZ: ${TZ}
+    networks:
+      - wbx_net
+    profiles:
+      - loadgen
+    cpuset: '8-11'
+
+networks:
+  wbx_net:
+    name: wbx_net
+    external: true

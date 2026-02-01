@@ -1,0 +1,17 @@
+services:
+  httperf:
+    image: ${IMAGE_PREFIX}/httperf:latest
+    container_name: httperf
+    restart: unless-stopped
+    environment:
+      TZ: ${TZ}
+    networks:
+      - wbx_net
+    profiles:
+      - loadgen
+    cpuset: '8-11'
+
+networks:
+  wbx_net:
+    name: wbx_net
+    external: true
