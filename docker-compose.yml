@@ -1,4 +1,4 @@
-name: cs681
+name: wbx
 
 include:
   - docker-compose/apache.docker-compose.yml
