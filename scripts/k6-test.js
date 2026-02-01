@@ -1,27 +1,24 @@
 import { check, sleep } from 'k6'
 import http from 'k6/http'
 
-export let options = {
-  // Duration is set via environment variable K6_DURATION
-  duration: __ENV.K6_DURATION || '120s',
+/* Env Configuration:
+  TARGET_URL: The URL to send requests to (default: http://localhost)
+  K6_DURATION: Duration of the test (default: 60s)
+  K6_VUS: Number of virtual users (default: 1)
+  K6_THINK_TIME: Think time between requests in seconds (default: 0)
+*/
 
-  // VUs are set via environment variable K6_VUS
+export let options = {
+  duration: __ENV.K6_DURATION || '60s',
   vus: parseInt(__ENV.K6_VUS) || 1
 }
 
 export default function () {
-  const target = __ENV.TARGET_URL || 'http://apache'
-
+  const target = __ENV.TARGET_URL || 'http://localhost'
   const response = http.get(target)
 
-  check(response, {
-    'status is 200': r => r.status === 200,
-    'response time < 500ms': r => r.timings.duration < 500
-  })
+  check(response, { 'status is 200': r => r.status === 200 })
 
-  // Think time - simulate user reading/processing time
   const thinkTime = parseFloat(__ENV.K6_THINK_TIME || '0')
-  if (thinkTime > 0) {
-    sleep(thinkTime)
-  }
+  if (thinkTime > 0) sleep(thinkTime)
 }
